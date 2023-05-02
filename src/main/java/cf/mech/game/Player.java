@@ -1,8 +1,7 @@
 package cf.mech.game;
 
-import cf.mech.game.map.Map;
+import cf.mech.Main;
 import cf.mech.game.map.block.Collide;
-import cf.mech.game.map.block.PosCollide;
 import cf.mech.game.modules.ControlModule;
 import cf.mech.game.modules.EntityModule;
 import cf.mech.game.modules.Module;
@@ -10,8 +9,8 @@ import lombok.SneakyThrows;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -20,11 +19,11 @@ public class Player implements GameObject, Collide {
     ArrayList<EntityModule> modules;
     ControlModule CModule;
     //public Rectangle pos;
-    private BufferedImage image;
+    private final BufferedImage image;
 
     @SneakyThrows
     public Player() {
-        image = ImageIO.read(Objects.requireNonNull(Player.class.getResource("/player/player.png")));
+        image = ImageIO.read(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("player/player.png")));
         modules = new ArrayList<>();
         CModule = new ControlModule(new Rectangle(600,100,80,80));
         modules.add(CModule);

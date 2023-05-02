@@ -1,8 +1,10 @@
 package cf.mech.cores.multilayer;
 
+import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
 import java.net.Socket;
 @RequiredArgsConstructor
@@ -12,6 +14,7 @@ public class Connection {
     @NonNull
     private int IP,Port;
     private Socket s;
+    private Gson gson = new Gson();
 
     boolean connect(){
         return true;
@@ -20,8 +23,9 @@ public class Connection {
 
     }
 
-    void send(){
-
+    @SneakyThrows
+    PackageR receive(){
+        return null;
     }
 
 

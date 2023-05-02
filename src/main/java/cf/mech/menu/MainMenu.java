@@ -1,5 +1,6 @@
 package cf.mech.menu;
 
+import cf.mech.Main;
 import cf.mech.game.KeyLoger;
 import cf.mech.game.Player;
 import lombok.SneakyThrows;
@@ -10,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Objects;
 
 public class MainMenu {
@@ -31,8 +33,8 @@ public class MainMenu {
         timer = new Timer(17, this::update);
         panel = p;
         this.t = t;
-        image = ImageIO.read(Objects.requireNonNull(Player.class.getResource("/menu/tlo/tlo.png")));
-        imageArrow = ImageIO.read(Objects.requireNonNull(Player.class.getResource("/menu/arrow.png")));
+        image = ImageIO.read(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("menu/tlo/tlo.png")));
+        imageArrow = ImageIO.read(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("menu/arrow.png")));
     }
     private boolean keyD = true;
     private void update(ActionEvent actionEvent) {
