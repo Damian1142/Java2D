@@ -12,7 +12,7 @@ public class Main {
     @SneakyThrows
     public static void main(String[] args) {
         JFrame jf = new JFrame("2D");
-        Game game = new Game();
+        Game game = new Game(jf);
         init(jf,game);
     }
     private static void init(JFrame jf,Game gm){

@@ -16,8 +16,8 @@ import java.util.Objects;
 
 public class Player implements GameObject, Collide {
 
-    ArrayList<EntityModule> modules;
-    ControlModule CModule;
+    private ArrayList<EntityModule> modules;
+    private ControlModule CModule;
     //public Rectangle pos;
     private final BufferedImage image;
 
@@ -64,6 +64,10 @@ public class Player implements GameObject, Collide {
     @Override
     public Rectangle getRectangle() {
         return CModule.pos;
+    }
+
+    public BufferedImage getImage(){
+        return image;
     }
 
 

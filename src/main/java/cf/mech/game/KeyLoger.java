@@ -15,9 +15,6 @@ public class KeyLoger implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         System.out.println("Click");
-
-
-
         keys[e.getKeyCode()] = true;
     }
 
