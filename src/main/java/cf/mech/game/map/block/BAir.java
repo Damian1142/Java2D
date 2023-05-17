@@ -1,5 +1,7 @@
 package cf.mech.game.map.block;
 
+import cf.mech.game.Camera;
+
 import java.awt.*;
 
 public class BAir implements Block{
@@ -11,7 +13,7 @@ public class BAir implements Block{
     }
 
     @Override
-    public void paint(Graphics g) {
+    public void paint(Graphics g, Camera c) {
 
     }
 
@@ -28,5 +30,10 @@ public class BAir implements Block{
     @Override
     public boolean ifCollide(Collide c) {
         return false;
+    }
+
+    @Override
+    public int getID() {
+        return 0;
     }
 }

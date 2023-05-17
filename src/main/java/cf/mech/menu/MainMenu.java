@@ -1,8 +1,13 @@
 package cf.mech.menu;
 
 import cf.mech.Main;
+import cf.mech.Tool;
+import cf.mech.game.Game;
+import cf.mech.game.ImageLoader;
 import cf.mech.game.KeyLoger;
 import cf.mech.game.Player;
+import cf.mech.game.screens.AbstractScreen;
+import cf.mech.game.screens.SinglePlayerScreen;
 import lombok.SneakyThrows;
 
 import javax.imageio.ImageIO;
@@ -13,122 +18,68 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-public class MainMenu {
-
-    public Timer timer;
-    private Timer t;
-    private JPanel panel;
-    private BufferedImage image,imageArrow,imageTlo1;
-
-    private int tloNbr = 0;
-
-    private static MenuE menuE = MenuE.JO;
-    private static MenuW menuW = MenuW.UT;
-    private InputServerInfoDialog serverInfo;
+public class MainMenu extends AbstractScreen {
+    //private JPanel panel;
+    private BufferedImage image,imageArrow;
+    private Game game;
+    private MenuE menuE = MenuE.JO;
 
     @SneakyThrows
-    public MainMenu(JPanel p, Timer t, JFrame jf) {
-        timer = new Timer(17, this::update);
-        panel = p;
-        this.t = t;
-        serverInfo =  new InputServerInfoDialog(jf);
+    public MainMenu(Game g) {
+        super(Tool.getImage("menu/tlo/tlo.png"),g);
+        game = g;
         image = ImageIO.read(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("menu/tlo/tlo.png")));
         imageArrow = ImageIO.read(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("menu/arrow.png")));
-        imageTlo1 = ImageIO.read(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("menu/tlo/wo1tlo.png")));
     }
     private boolean keyD = true;
-    private void update(ActionEvent actionEvent) {
-
-        if (tloNbr == 0) {
-            if (KeyLoger.keys[KeyEvent.VK_DOWN]) {
-                if (keyD)
-                    switch (menuE) {
-                        case JO:
-                            menuE = MenuE.WO;
-                            break;
-                        case WO:
-                            menuE = MenuE.WY;
-                            break;
-                        case WY:
-                            break;
-                    }
-                keyD = false;
-            } else if (KeyLoger.keys[KeyEvent.VK_UP]) {
-                if (keyD)
-                    switch (menuE) {
-                        case JO:
-                            break;
-                        case WO:
-                            menuE = MenuE.JO;
-                            break;
-                        case WY:
-                            menuE = MenuE.WO;
-                            break;
-                    }
-                keyD = false;
-
-            } else if (KeyLoger.keys[KeyEvent.VK_ENTER]) {
+    public void update() {
+        if (KeyLoger.keys[KeyEvent.VK_DOWN]) {
+            //System.out.println("down1");
+            if (keyD) {
                 switch (menuE) {
                     case JO:
-                        stop();
+                        menuE = MenuE.WO;
                         break;
                     case WO:
-                        tloNbr = 1;
+                        menuE = MenuE.WY;
                         break;
                     case WY:
-                        System.exit(0);
+                        break;
                 }
-                keyD = true;
-            } else keyD = true;
-        } else if (tloNbr == 1) {
-            /*
-            Menu 2
-             */
-            if (KeyLoger.keys[KeyEvent.VK_DOWN]) {
-                if (keyD)
-                    switch (menuW) {
-                        case UT: menuW = MenuW.DO; break;
-                    }
-                keyD = false;
-            } else if (KeyLoger.keys[KeyEvent.VK_UP]) {
-                if (keyD)
-                    switch (menuW) {
-                        case DO: menuW = MenuW.UT; break;
-                    }
-                keyD = false;
-
-            } else if (KeyLoger.keys[KeyEvent.VK_ENTER]) {
-                switch (menuW) {
-                    case DO:
-                        serverInfo.setVisible(true);
+            }
+            keyD = false;
+        } else if (KeyLoger.keys[KeyEvent.VK_UP]) {
+            if (keyD)
+                switch (menuE) {
+                    case JO:
+                        break;
+                    case WO:
+                        menuE = MenuE.JO;
+                        break;
+                    case WY:
+                        menuE = MenuE.WO;
+                        break;
                 }
-                keyD = true;
-            } else keyD = true;
-        }
-        panel.repaint();
+            keyD = false;
 
+        } else if (KeyLoger.keys[KeyEvent.VK_ENTER]) {
+            switch (menuE) {
+                case JO:
+                    game.loadScreen(new SinglePlayerScreen(game));
+                    break;
+                case WO:
+                    break;
+                case WY:
+                    System.exit(0);
+            }
+            keyD = true;
+        } else keyD = true;
+        super.update();
     }
 
     public void paint(Graphics g){
-        if (tloNbr == 0) {
-            g.drawImage(image, 0, 0, null);
-            g.drawImage(imageArrow, 1000, menuE == MenuE.JO ? 150 : menuE == MenuE.WO ? 300 : 450, null);
-        } else if (tloNbr == 1) {
-            g.drawImage(imageTlo1, 0, 0, null);
-            g.drawImage(imageArrow, 750, menuE == MenuE.JO ? 150 : 200, null);
-        }
+        super.paint(g);
+        //g.drawImage(image, 0, 0, null);
+        g.drawImage(imageArrow, 1000, menuE == MenuE.JO ? 150 : menuE == MenuE.WO ? 300 : 450, null);
     }
-    public void start(){
-        timer.start();
-    }
-    public void stop(){
-        timer.stop();
-        t.start();
-    }
-
-    public static MenuE getMenuE() {
-        return menuE;
-    }
-
-
 }

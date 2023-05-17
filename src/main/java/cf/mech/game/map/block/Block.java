@@ -1,9 +1,8 @@
 package cf.mech.game.map.block;
 
-import cf.mech.game.GameObject;
+import cf.mech.game.GameObjectInterface;
 
-import java.io.Serializable;
+public interface Block extends GameObjectInterface, Collide {
 
-public interface Block extends GameObject, Collide {
-
+    int getID();
 }

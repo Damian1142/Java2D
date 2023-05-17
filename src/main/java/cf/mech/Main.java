@@ -2,6 +2,8 @@ package cf.mech;
 
 import cf.mech.game.Game;
 import cf.mech.game.KeyLoger;
+import cf.mech.game.map.GameMap;
+import cf.mech.game.screens.IntroScreen;
 import lombok.SneakyThrows;
 
 import javax.swing.*;
@@ -11,8 +13,11 @@ public class Main {
 
     @SneakyThrows
     public static void main(String[] args) {
+
+        //new GameMap(20,7,0);
+        //System.exit(0);
         JFrame jf = new JFrame("2D");
-        Game game = new Game(jf);
+        Game game = new Game();
         init(jf,game);
     }
     private static void init(JFrame jf,Game gm){
